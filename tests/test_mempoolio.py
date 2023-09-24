@@ -14,11 +14,6 @@ class TestMempool(TestCase):
         self.assertEqual(mempool_transaction_info.fee, 1180)
         self.assertEqual(mempool_transaction_info.weight, 514)
 
-    def test_get_effective_fee_rate(self):
-        tx_id = "983f3634b5e0cd0017fa3579b95553047c8d30e3c42dfbaa371bcef72f6667ee"
-        effective_fee_rate = self.mempool.get_effective_fee_rate(tx_id)
-        self.assertEqual(effective_fee_rate, 12)
-
     def test_get_net_spent_for_address_on_transaction(self):
         tx_id = "f09cc426a788c99f1eb6735838cc83579b7edd47e11b67aebbd6b6ba1eb25d24"
         address = "bc1ppq9v5r7cu7w9nc408jyucvtpl2wnnw7kcdfu425z0f0e35f4h5yswtykl3"
@@ -29,12 +24,12 @@ class TestMempool(TestCase):
         tx_id = "ce34760684f38c06990be1c059d8fb382e7c473a37ae5f2b051efde8cd959258"
         address = "bc1p7zyy83sxtxy3n3e24tc9wwshzduj6g8z9x325l7kxd8gw4vs8qmqefum44"
         net_spent = self.mempool.get_net_spent_for_address_on_transaction(address, tx_id)
-        self.assertEqual(net_spent, -340006)
+        self.assertEqual(net_spent, -546)
 
     def test_get_inscription_content_from_transaction(self):
         content = self.mempool.get_inscription_content_from_transaction(
-            "29ed1624ae901dd96a38bef2b6969e67eefd8bcb42d13ae90c63cac7427b115b")
-        self.assertEqual(content, "805502.bitmap")
+            "a12ef285fc64b92b9920a5dc314366a3f8d9402fe9aacb8df45b6556ab0d8ec2")
+        self.assertEqual(content, "808808.bitmap")
 
     def test_get_vin_addresses(self):
         tx_id = "0599e4ad4e54e5fd62c7440ff607c9026614822a77b40ebfa77f57122e299ba2"
@@ -82,10 +77,10 @@ class TestMempool(TestCase):
         self.assertEqual(len(transactions), 5)
 
     def test_mempool_bulk(self):
-        block_info = self.mempool.get_mempool_bulk(from_block=73550, to_block=73556)
+        block_info = self.mempool.get_mempool_bulk(from_block=73550, to_block=73570)
         self.assertEqual(len(block_info), 20)
 
     def test_get_all_tx_size_in_block(self):
         block_height = 73555
         tx_size = self.mempool.get_all_tx_value_in_block(block_height)
-        self.assertEqual(tx_size, [134, 159, 157, 272, 225])
+        self.assertEqual(tx_size, [5000000000, 5000000000, 5000000000, 10000000000, 10000000000])

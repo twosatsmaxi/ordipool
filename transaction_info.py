@@ -5,11 +5,11 @@ from dataclasses import dataclass
 
 @dataclass
 class MempoolTransactionInfo:
-    effective_fee_rate: int
     confirmed: bool
     fee: int
     weight: int
     block_height: int
+    effective_fee_rate: int = None
 
     def get_fee_rate(self) -> int:
         if self.effective_fee_rate is not None:
