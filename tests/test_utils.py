@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from utils import convert_to_hex, has_ordinal_in_inner_witnessscript, get_inscription_content_from_inner_witnessscript, \
+from src.utils.utils import convert_to_hex, has_ordinal_in_inner_witnessscript, get_inscription_content_from_inner_witnessscript, \
     chunk_range
 
 

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from transaction_info import MempoolTransactionInfo
+from src.models.transaction_info import MempoolTransactionInfo
 
 
 class TestMempoolTransactionInfo(TestCase):
