@@ -1,6 +1,5 @@
 # ordipool
-![ci]
-(https://github.com/twosatsmaxi/ordipool/actions/workflows/ci.yml/badge.svg)
+![ci](https://github.com/twosatsmaxi/ordipool/actions/workflows/ci.yml/badge.svg)
 
 A mempool sdk library tailored for multiple usecases including ordinals
 ### Setup
