@@ -3,8 +3,8 @@ from multiprocessing.pool import ThreadPool
 
 import requests
 
-from src.models.transaction_info import TransactionVinVoutItem, MempoolTransactionInfo
-from src.utils.utils import extract_ordinal_content_from_tx
+from ordipool.models.transaction_info import MempoolTransactionInfo, TransactionVinVoutItem
+from ordipool.utils.utils import extract_ordinal_content_from_tx
 
 
 class Mempool:

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from src.ordipool.mempoolio import Mempool
-from src.models.transaction_info import TransactionVinVoutItem
+from ordipool.models.transaction_info import TransactionVinVoutItem
+from ordipool.ordipool.mempoolio import Mempool
 
 
 class TestMempool(TestCase):
