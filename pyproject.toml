@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ordipool"
-version = "1.0.0"
+version = "1.0.1"
 description = "A mempool sdk library tailored for multiple usecases including ordinals"
 readme = "README.md"
 authors = [{name = "twosatsmaxi"}]
