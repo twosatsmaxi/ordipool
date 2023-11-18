@@ -162,3 +162,13 @@ class Mempool:
         else:
             raise Exception("Error getting address info")
         return json
+
+    def get_rbf_for_transaction(self, tx_id):
+        url = self.base_url + "/v1/tx/" + tx_id+"/rbf"
+        res = requests.get(url)
+        if res.status_code == 200:
+            json = res.json()
+        else:
+            raise Exception("Error getting transaction info")
+        return json
+
