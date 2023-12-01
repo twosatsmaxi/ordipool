@@ -7,8 +7,7 @@ def convert_to_string(hex_string: str):
 
 
 def has_ordinal_in_inner_witnessscript(inner_witnessscript_asm: str) -> bool:
-    return "OP_IF" in inner_witnessscript_asm and convert_to_hex('ord') in inner_witnessscript_asm and \
-        "OP_PUSHBYTES_13" in inner_witnessscript_asm and "OP_ENDIF" in inner_witnessscript_asm
+    return "OP_IF" in inner_witnessscript_asm and convert_to_hex('ord') in inner_witnessscript_asm
 
 
 def extract_ordinal_content_from_tx(tx_data_json: []):
@@ -20,7 +19,7 @@ def extract_ordinal_content_from_tx(tx_data_json: []):
 
 def get_inscription_content_from_inner_witnessscript(inner_witnessscript_asm: str) -> str:
     if has_ordinal_in_inner_witnessscript(inner_witnessscript_asm):
-        return convert_to_string(inner_witnessscript_asm.split("OP_PUSHBYTES_13 ")[1].split(" OP_ENDIF")[0])
+        return convert_to_string(inner_witnessscript_asm.split(" ")[-2])
 
 
 def chunk_range(start: int, end: int, chunk_size: int) -> list[tuple[int, int]]:
