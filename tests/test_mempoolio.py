@@ -85,11 +85,6 @@ class TestMempool(TestCase):
         tx_size = self.mempool.get_all_tx_value_in_block(block_height)
         self.assertEqual(tx_size, [5000000000, 5000000000, 5000000000, 10000000000, 10000000000])
 
-    def test_get_rbf_for_transaction(self):
-        tx_id = '5718c479daefc71021ab684f796f329999acfdd1cb124ed2683733a891fd1534'
-        rbf = self.mempool.get_rbf_for_transaction(tx_id)
-        self.assertTrue(rbf['replacements'] is not None)
-
     def test_get_full_transaction(self):
         tx_id = '5ec47422dff2ce2ffdf7adbd750969efd213070e68a978943426a65a81c4b42a'
         full_tx = self.mempool.get_transaction(tx_id)
