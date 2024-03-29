@@ -3,7 +3,8 @@ from multiprocessing.pool import ThreadPool
 
 import requests
 
-from ordipool.models.transaction_info import MempoolTransactionInfo, TransactionVinVoutItem
+from ordipool.models.transaction_info import MempoolTransactionInfo, TransactionVinVoutItem, MempoolTransaction, \
+    TransactionVin
 from ordipool.utils.utils import extract_ordinal_content_from_tx
 
 
@@ -29,6 +30,36 @@ class Mempool:
             fee=json["fee"],
             weight=json["weight"],
             block_height=json["status"]["block_height"] if "block_height" in json["status"] else sys.maxsize,
+        )
+
+    def get_transaction(self, tx) -> MempoolTransaction:
+        url = self.base_url + "/tx/" + tx
+        res = requests.get(url)
+        if res.status_code == 200:
+            json = res.json()
+        else:
+            raise Exception("Error getting transaction info")
+        effective_fee_rate = self.get_effective_fee_rate(tx)
+        vins = []
+        for vin in json["vin"]:
+            transaction_vin = TransactionVin(tx_id=vin["txid"],
+                                             prev_out=TransactionVinVoutItem(
+                                                 address=vin["prevout"]["scriptpubkey_address"],
+                                                 value=vin["prevout"]["value"]))
+            vins.append(transaction_vin)
+        vouts = []
+        for vout in json["vout"]:
+            vouts.append(TransactionVinVoutItem(address=vout["scriptpubkey_address"],
+                                                value=vout["value"]))
+        return MempoolTransaction(
+            tx_id=tx,
+            effective_fee_rate=effective_fee_rate,
+            confirmed=json["status"]["confirmed"],
+            fee=json["fee"],
+            weight=json["weight"],
+            block_height=json["status"]["block_height"] if "block_height" in json["status"] else sys.maxsize,
+            vins=vins,
+            vouts=vouts
         )
 
     def get_effective_fee_rate(self, tx_id) -> int:
@@ -164,11 +195,10 @@ class Mempool:
         return json
 
     def get_rbf_for_transaction(self, tx_id):
-        url = self.base_url + "/v1/tx/" + tx_id+"/rbf"
+        url = self.base_url + "/v1/tx/" + tx_id + "/rbf"
         res = requests.get(url)
         if res.status_code == 200:
             json = res.json()
         else:
             raise Exception("Error getting transaction info")
         return json
-
